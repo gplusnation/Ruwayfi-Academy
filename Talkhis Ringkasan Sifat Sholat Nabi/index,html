@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS langsung di sini */
+        :root {
+            --primary-color: #007bff;
+            --text-color: #333;
+            --background-color: #f8f9fa;
+            --card-background: #fff;
+            --border-color: #eee;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--card-background);
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Untuk responsif */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .logo-img {
+            height: 80px;
+            margin-right: 10px;
+        }
+
+        .nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav li {
+            margin-left: 20px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Main Content */
+        main {
+            padding: 40px 0;
+        }
+
+        section {
+            background-color: var(--card-background);
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Carousel */
+        .carousel-section {
+            overflow: hidden; /* Sembunyikan item yang tidak terlihat */
+        }
+
+        .carousel-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        .carousel-track {
+            display: inline-flex;
+            padding-bottom: 10px;
+        }
+
+        .carousel-item {
+            flex: 0 0 auto;
+            width: 90vw; /* Responsif: 90% dari viewport width */
+            max-width: 300px;
+            margin-right: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Audio List */
+        .audio-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .audio-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .audio-item:last-child {
+            border-bottom: none;
+        }
+
+        .audio-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .audio-info {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .audio-title {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .audio-artist {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Media Queries untuk responsif */
+        @media (min-width: 768px) {
+            .carousel-item {
+                width: calc(33.333% - 15px); /* Menampilkan 3 item di layar desktop */
+                max-width: none;
+            }
+
+            .audio-item {
+                flex-wrap: nowrap;
+            }
+
+            .audio-info {
+                margin-bottom: 0;
+            }
+
+            audio {
+                width: 250px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav ul {
+                flex-direction: column;
+                margin-top: 10px;
+            }
+            .nav li {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="https://ruwayfiacademy.free.nf/uploads/settings/logo_kiri.png" alt="Logo Web" class="logo-img">
+                <h1>Ruwayfi' Academy</h1>
+                
+            </div>
+            <h3>Belajar Islam Dasar dengan Al-Qur’an & Sunnah ‘Ala Fahm Salaf</h3>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="carousel-section">
+                <h2>Galeri Unggulan</h2>
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-item">
+                            <a href="https://ruwayfiacademy.wordpress.com/2025/06/19/yang-terbaiknya-adalah-yang-paling-konsisten/" target="_blank">
+                                <img src="https://ruwayfiacademy.wordpress.com/wp-content/uploads/2025/06/whatsapp-image-2025-06-19-at-10.44.17-1.jpeg?w=768" alt="Yang terbaiknya adalah yang paling konsisten">
+                            </a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="https://ruwayfiacademy.wordpress.com/2025/06/16/jangan-jadikan-agama-sebagai-bahan-candaan/" target="_blank">
+                                <img src="https://ruwayfiacademy.wordpress.com/wp-content/uploads/2025/06/whatsapp-image-2025-06-16-at-18.28.37.jpeg?w=768" alt="Jangan jadikan Agama sebagai bahan candaan">
+                            </a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="https://ruwayfiacademy.wordpress.com/2025/06/08/ketaqwaan-dan-ketulusan-sebagai-nilai-inti-dari-ibadah/" target="_blank">
+                                <img src="https://ruwayfiacademy.wordpress.com/wp-content/uploads/2025/06/whatsapp-image-2025-06-08-at-14.59.11.jpeg?w=768" alt="Ketaqwaan dan ketulusan sebagai nilai inti dari ibadah">
+                            </a>
+                        </div>
+                        </div>
+                </div>
+            </section>
+            
+            <section class="audio-list-section">
+                <h2>Talkhis Sifat Shalat Nabi</h2>
+                <h3>Ustadz Taufiq Abu Ruwayfi hafizahullah</h3>
+                <ul class="audio-list">
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 1</span>
+                            <span class="audio-artist">Selayang pandang kitab Ringkasan sifat sholat Nabi Serta Biografi singkat dari As Syaikh Nashiruddin Al Albani Rahimahullah</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/Pertemuan%201.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </li>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 2</span>
+                            <span class="audio-artist">Menghadap kiblat</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/Pertemuan%202.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 3</span>
+                            <span class="audio-artist">Kondisi kondisi yang gugur kewajiban untuk menghadap kiblat</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/Pertemuan%203.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 4</span>
+                            <span class="audio-artist">Hukum orang yang sholat tidak menghadap ka'bah dengan keliru</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/Pertemuan%204.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 5</span>
+                            <span class="audio-artist">Berdiri bagi yang mampu</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/Pertemuan%205.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 6</span>
+                            <span class="audio-artist">Beberapa hal yang berkaitan dengan sholat bagi yang sakit, dan beberapa hal yang dimudahkan bagi orang yang sholat</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/P6_ori.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 7</span>
+                            <span class="audio-artist"> Hukum sholat sambil memakai alas kaki</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/Pertemuan%207.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 8</span>
+                            <span class="audio-artist">Hukum sholat diatas tempat yang tinggi bagi imam</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/Pertemuan%208%20(1).mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 9</span>
+                            <span class="audio-artist">Hukum sholat menghadap sutroh (pembatas)</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/WhatsApp%20Ptt%202025-06-26%20at%2009.13.17.ogg" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 10</span>
+                            <span class="audio-artist">Ukuran dari pembatas sholat (sutroh)</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/Pertemuan%2010.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 11</span>
+                            <span class="audio-artist">Larangan sholat menghadap kuburan serta larangan melewati orang yang sedang sholat yang didepannya ada pembatas</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250630-WA0004.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 12</span>
+                            <span class="audio-artist">Hal yang berkaitan dengan sutroh (bagian terakhir)</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250701-WA0005.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 13</span>
+                            <span class="audio-artist">Hal yang berkaitan dengan niat</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250702-WA0000.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 14</span>
+                            <span class="audio-artist">Hal yang berkaitan dengan takbir</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250702-WA0012.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 15</span>
+                            <span class="audio-artist">Tatacara bertakbir</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250707-WA0000.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 16</span>
+                            <span class="audio-artist">Posisi tangan setelah bertakbir</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250708-WA0015.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 17</span>
+                            <span class="audio-artist">Khusyu' dan melihat tempat sujud</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250708-WA0015.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 18</span>
+                            <span class="audio-artist">Hal yang bekaitan dengan kekhusyu'an</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250709-WA0002.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 19</span>
+                            <span class="audio-artist">Disyariatkan membaca doa iftitah/istiftah dan bentuk-bentuk bacaannya</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250710-WA0002.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 20</span>
+                            <span class="audio-artist">Disyariatkan membaca ta'awudz dan wajib membaca surat alfatihah sebagai rukun sholat</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250711-WA0000.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 21</span>
+                            <span class="audio-artist">Hal yang berkaitan dengan bacaan Alfatihah</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250714-WA0005.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 22</span>
+                            <span class="audio-artist">Hal yang berkaitan dengan bacaan alfatihah dan bacaan setelahnya</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/WhatsApp%20Ptt%202025-07-15%20at%2009.07.55.ogg" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 23</span>
+                            <span class="audio-artist">Hal yang berkaitan dengan bacaan alfatihah dan bacaan setelahnya (Bagian 2)</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250716-WA0004.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 24</span>
+                            <span class="audio-artist">Ruku' setelah membaca surat</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250717-WA0002.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 25</span>
+                            <span class="audio-artist">Sujud dan hal yang berkaitan dengannya</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250718-WA0000.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 26</span>
+                            <span class="audio-artist">Sujud dan hal yang berkaitan dengannya. (Bagian 2)</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250721-WA0000.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 27</span>
+                            <span class="audio-artist">Duduk diantara dua sujud</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/WhatsApp%20Ptt%202025-07-22%20at%2009.33.31.ogg" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 28</span>
+                            <span class="audio-artist">Bangkit dari rakaat kedua dan duduk tasyahhud awal</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250723-WA0000.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 29</span>
+                            <span class="audio-artist">Hal yg berkaitan dengan tasyahud</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250724-WA0000.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 30</span>
+                            <span class="audio-artist">Berdiri dirakaat ketiga dan keempat serta permasalahan qunut nazilah dan qunut witir</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250728-WA0000.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 31</span>
+                            <span class="audio-artist">Tasyahud akhir dan duduk tawarruk</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250729-WA0000.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 32</span>
+                            <span class="audio-artist">Kewajiban untuk bershalawat kepada Nabi dan meminta perlindungan kepada Allah dari empat perkara</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250730-WA0004.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    <li class="audio-item">
+                        <div class="audio-info">
+                            <span class="audio-title">Pertemuan 33</span>
+                            <span class="audio-artist">Hal yang berkaitan dengan salam</span>
+                        </div>
+                        <audio controls>
+                            <source src="https://github.com/gplusnation/Ruwayfi-Academy/raw/refs/heads/main/Talkhis%20Ringkasan%20Sifat%20Sholat%20Nabi/PTT-20250801-WA0007.opus" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+
+                    </li>
+                    </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Ruwayfi' Academy. Semua Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript langsung di sini
+        document.addEventListener('DOMContentLoaded', () => {
+            const carouselContainer = document.querySelector('.carousel-container');
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            carouselContainer.addEventListener('mousedown', (e) => {
+                isDown = true;
+                carouselContainer.classList.add('active');
+                startX = e.pageX - carouselContainer.offsetLeft;
+                scrollLeft = carouselContainer.scrollLeft;
+            });
+
+            carouselContainer.addEventListener('mouseleave', () => {
+                isDown = false;
+                carouselContainer.classList.remove('active');
+            });
+
+            carouselContainer.addEventListener('mouseup', () => {
+                isDown = false;
+                carouselContainer.classList.remove('active');
+            });
+
+            carouselContainer.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - carouselContainer.offsetLeft;
+                const walk = (x - startX) * 3;
+                carouselContainer.scrollLeft = scrollLeft - walk;
+            });
+        });
+    </script>
+</body>
+</html>
